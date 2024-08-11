@@ -1,8 +1,9 @@
 using Api.Persistance.Repositories.Interfaces;
+using Api.Services.Interfaces;
 
 namespace Api.Services;
 
-public class ProductService
+public class ProductService: IProductService
 {
     private readonly IProductRepository _productRepository;
 

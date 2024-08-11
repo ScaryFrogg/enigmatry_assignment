@@ -8,7 +8,6 @@ public class DatabaseContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<Client> Clients { get; set; }
-
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
     }
