@@ -30,11 +30,17 @@ public class FinancialDocumentController : ControllerBase
     public IActionResult Get([FromBody] GetFinancialDocumentRequest request)
     {
         _logger.LogDebug($"GetFinancialDocumentRequest [DocumentId]${request.DocumentId} [ProductCode]${request.ProductCode} [TenantId]${request.TenantId}");
-        bool isProductSupported = _productService.IsProductSupported(request.ProductCode);
-        if (isProductSupported)
+        // bool isProductSupported = _productService.IsProductSupported(request.ProductCode);
+        // if (!isProductSupported)
+        // {
+        //     return StatusCode(403, "Product is not supported.");
+        // }
+        var doc = _productService.GetFinancialDocument(request.DocumentId);
+        if (doc == null)
         {
             return StatusCode(403, "Product is not supported.");
         }
+
         return Ok(new { Message = "Request is valid." });
     }
 }

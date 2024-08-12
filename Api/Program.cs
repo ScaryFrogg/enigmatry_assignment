@@ -19,6 +19,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<ITenantRepository, TenantRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IFinancialDocumentRepository, FinancialDocumentRepository>();
 
 var app = builder.Build();
 

@@ -2,9 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.Persistance.Model;
 
-public class Tenant
+public class FinancialDocument
 {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
-    public bool IsWhitelisted { get; set; } = true;
+    public required Tenant Tenant { get; set; }
+    public required Client Client { get; set; }
 }
