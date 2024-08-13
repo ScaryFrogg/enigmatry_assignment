@@ -22,10 +22,9 @@ public abstract class TestBase
     public void Setup()
     {
         var services = new ServiceCollection();
-        services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IFinancialDocumentService, FinancialDocumentService>();
         services.AddScoped<IClientRepository, ClientRepository>();
         services.AddScoped<ITenantRepository, TenantRepository>();
-        services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IFinancialDocumentRepository, FinancialDocumentRepository>();
         services.AddDbContext<DatabaseContext>(options =>
             options.UseInMemoryDatabase("TestDatabase"));
@@ -33,13 +32,13 @@ public abstract class TestBase
         _serviceProvider = services.BuildServiceProvider();
 
         // Resolve the controller with its dependencies
-        var productService = _serviceProvider.GetRequiredService<IProductService>();
+        var financialDocumentService = _serviceProvider.GetRequiredService<IFinancialDocumentService>();
         var logger = _serviceProvider.GetRequiredService<ILogger<FinancialDocumentController>>();
 
         _financialDocumentRepository = _serviceProvider.GetRequiredService<IFinancialDocumentRepository>();
         _controller = new FinancialDocumentController(
             logger,
-            productService
+            financialDocumentService
             );
     }
 

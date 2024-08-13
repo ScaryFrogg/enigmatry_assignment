@@ -1,5 +1,5 @@
 using Api.Dto;
-using Api.Persistance;
+using Api.Persistance.Model;
 using Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,18 +10,18 @@ namespace Api.Controllers;
 public class FinancialDocumentController : ControllerBase
 {
     private readonly ILogger<FinancialDocumentController> _logger;
-    private readonly IProductService _productService;
+    private readonly IFinancialDocumentService _financialDocumentService;
     // private readonly ITenantService _tenantService;
     // private readonly IClientService _clientService;
 
     public FinancialDocumentController(
         ILogger<FinancialDocumentController> logger,
-        IProductService productService
+        IFinancialDocumentService financialDocumentService
     // , ITenantService tenantService, IClientService clientService
     )
     {
         _logger = logger;
-        _productService = productService;
+        _financialDocumentService = financialDocumentService;
         // _tenantService = tenantService;
         // _clientService = clientService;
     }
@@ -30,17 +30,19 @@ public class FinancialDocumentController : ControllerBase
     public IActionResult Get([FromBody] GetFinancialDocumentRequest request)
     {
         _logger.LogDebug($"GetFinancialDocumentRequest [DocumentId]${request.DocumentId} [ProductCode]${request.ProductCode} [TenantId]${request.TenantId}");
-        // bool isProductSupported = _productService.IsProductSupported(request.ProductCode);
-        // if (!isProductSupported)
-        // {
-        //     return StatusCode(403, "Product is not supported.");
-        // }
-        var doc = _productService.GetFinancialDocument(request.DocumentId);
+        IProduct? productType = ProductStrategy.Instance.GetProduct(request.ProductCode);
+        if (productType == null)
+        {
+            return StatusCode(403, $"ProductCode:${request.ProductCode}  is unsupported");
+        }
+
+        var doc = _financialDocumentService.GetFinancialDocument(request.DocumentId);
         if (doc == null)
         {
             return StatusCode(403, "Product is not supported.");
         }
 
+        //TODO VP productType.Mask("asd");
         return Ok(new { Message = "Request is valid." });
     }
 }

@@ -2,8 +2,7 @@ using Api.Persistance.Model;
 
 namespace Api.Services.Interfaces;
 
-public interface IProductService
+public interface IFinancialDocumentService
 {
-    bool IsProductSupported(string productCode);
     FinancialDocument? GetFinancialDocument(Guid DocumentId);
 }
