@@ -14,6 +14,10 @@ public class BaseRepository<T> : IRepository<T> where T : class
         _dbSet = context.Set<T>();
     }
 
+    public T? GetById(Guid id)
+    {
+        return _dbSet.Find(id);
+    }
     public async Task<IEnumerable<T>> GetAllAsync()
     {
         return await _dbSet.ToListAsync();

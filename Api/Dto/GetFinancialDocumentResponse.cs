@@ -5,8 +5,8 @@ namespace Api.Dto;
 
 public class GetFinancialDocumentResponse
 {
-    public required string Data { get; set; }
-    public required string Company { get; set; }
+    public string? Data { get; set; }
+    public Company? Company { get; set; }
 }
 public class Company
 {

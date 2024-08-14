@@ -6,6 +6,8 @@ public class FinancialDocument
 {
     [Key]
     public Guid Id { get; set; } = Guid.NewGuid();
+    public required string Data { get; set; }
+
     public required Tenant Tenant { get; set; }
-    public required Client Client { get; set; }
+    public required VatRegistration ClientVat { get; set; }
 }
